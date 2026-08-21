@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Header } from '../components/Header'
 import './HomePage.css';
 //import { products } from '../../starting-code/data/products'
-export function HomePage() {
+export function HomePage({ cart }) {
     /*
    ============================================================
    TESTING DATA FETCHING: FETCH API vs AXIOS
@@ -55,16 +55,10 @@ export function HomePage() {
     // import { products } from '../../starting-code/data/products';
 
     const [products, setProducts] = useState([]);
-    const [cart, setCart] = useState([]);
     useEffect(() => {
         axios.get('/api/products')
             .then((response) => {
                 setProducts(response.data);
-            })
-
-        axios.get('/api/cart-items')
-            .then((response) => {
-                setCart(response.data);
             })
     }, []);
 
