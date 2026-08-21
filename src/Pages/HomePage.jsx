@@ -1,27 +1,66 @@
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Header } from '../components/Header'
 import './HomePage.css';
-import { products } from '../../starting-code/data/products'
+//import { products } from '../../starting-code/data/products'
 export function HomePage() {
-    // fetch('http://localhost:3000/api/products')
-    //     .then((response) => response.json()
-    //         .then((data) => {
-    //             console.log(data)
-    //         }))
+    /*
+   ============================================================
+   TESTING DATA FETCHING: FETCH API vs AXIOS
+   ============================================================
+ 
+   1. FETCH - Nested .then()
+   ------------------------------------------------------------
+   Testing how to fetch data using the Fetch API and access
+   the JSON response using nested Promises.
+ 
+   fetch('http://localhost:3000/api/products')
+       .then((response) => response.json()
+           .then((data) => {
+               console.log(data);
+           })
+       );
+ 
+ 
+   2. FETCH - Chained .then()
+   ------------------------------------------------------------
+   Same Fetch API test, but response.json() is returned so
+   that the parsed data can be handled in the next .then().
+ 
+   fetch('http://localhost:3000/api/products')
+       .then((response) => {
+           return response.json();
+       })
+       .then((data) => {
+           console.log(data);
+       });
+ 
+ 
+   3. AXIOS
+   ------------------------------------------------------------
+   Testing data fetching using Axios.
+   Axios automatically parses JSON, so the actual response
+   data is available directly through response.data.
+ 
+   axios.get('http://localhost:3000/api/products')
+       .then((response) => {
+           console.log(response.data);
+       });
+ 
+   ============================================================
+ */
 
-    //same as above code just use return 
-    // fetch('http://localhost:3000/api/products')
-    //     .then((response) => {
-    //         return response.json();
-    //     }).then((data) => {
-    //         console.log(data);
-    //     })
+    // We use Axios to fetch products from the backend API,
+    // so the locally imported products data is no longer required.
+    // import { products } from '../../starting-code/data/products';
 
-    //using axios
-    axios.get('http://localhost:3000/api/products')
-        .then((response) => {
-            console.log(response.data);
-        })
+    const [products, setProducts] = useState([]);
+    useEffect(() => {
+        axios.get('http://localhost:3000/api/products')
+            .then((response) => {
+                setProducts(response.data);
+            })
+    }, []);
 
     return (
         <>
